@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+</head>
+<body>
+    <header>
+        <div>
+            {% if avatar_url %}
+            <img src="{{ avatar_url }}" alt="Аватар">
+            {% endif %}
+        </div>
+        <div>{{ user.username }}!</div>
+        <div><a href="{% url 'app:logout' %}">Logout</a></div>
+    </header>
+
+    <h2>Your Remembers</h2>
+</body>
+</html>
