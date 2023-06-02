@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
+    'leaflet',
     'app',
 ]
 
@@ -139,3 +140,16 @@ AUTHENTICATION_BACKENDS = [
 
 
 LOGIN_REDIRECT_URL  = '/profile/'
+
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (55.7522200, 37.6155600),
+    'DEFAULT_ZOOM': 13,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+}
+
+
+GDAL_LIBRARY_PATH = str(BASE_DIR / 'venv/Lib/site-packages/osgeo/gdal304.dll')
+
+GEOS_LIBRARY_PATH = str(BASE_DIR / 'venv/Lib/site-packages/osgeo/geos_c.dll')

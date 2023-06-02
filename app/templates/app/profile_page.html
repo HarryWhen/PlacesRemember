@@ -1,7 +1,22 @@
 <!DOCTYPE html>
+{% load leaflet_tags %}
 <html>
 <head>
     <title>Profile</title>
+    {% leaflet_js %}
+    {% leaflet_css %}
+    <script>
+        function initMap(map, options) {
+            var marker = L.marker([55.7522200, 37.6155600], { draggable: true }).addTo(map);
+
+            marker.on('dragend', function(event) {
+                var latitude = marker.getLatLng().lat;
+                var longitude = marker.getLatLng().lng;
+                document.getElementById('latitude').value = latitude;
+                document.getElementById('longitude').value = longitude;
+            });
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -15,5 +30,20 @@
     </header>
 
     <h2>Your Remembers</h2>
+    <div>
+        {% for place_remember in place_remembers %}
+            <h3>{{ place_remember.name }} at {{ place_remember.location }}</h3>
+            <p>{{ place_remember.comment }}</p>
+        {% endfor %}
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        {% for control in place_remember_form %}
+            {{ control }}<br>
+        {% endfor %}
+        {% leaflet_map "map" callback="window.initMap" %}
+        <button type="submit">Add remember</button>
+    </form>
 </body>
 </html>

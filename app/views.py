@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as logout_auth
 from social_django.models import UserSocialAuth
 
+from . import models, forms
+
 
 def home(request):
     return render(request, 'app/home_page.html')
@@ -16,6 +18,14 @@ def logout(request):
 
 @login_required
 def profile(request):
+    if request.method == 'POST':
+        place_remember_form = forms.PlaceRememberForm(request.POST)
+        if place_remember_form.is_valid():
+            place_remember = place_remember_form.save(commit=False)
+            place_remember.user = request.user
+            place_remember.save()
+            return redirect('app:profile')
+
     context = {}
 
     if request.user.social_auth.filter(provider='vk-oauth2').exists():
@@ -24,5 +34,15 @@ def profile(request):
         context.update({
             'avatar_url': avatar_url
         })
+
+    place_remembers = models.PlaceRemember.objects.filter(user=request.user)
+    context.update({
+        'place_remembers': place_remembers
+    })
+
+    place_remember_form = forms.PlaceRememberForm()
+    context.update({
+        'place_remember_form': place_remember_form
+    })
 
     return render(request, 'app/profile_page.html', context)
