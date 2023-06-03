@@ -10,7 +10,7 @@ def home(request):
     return render(request, 'app/home.html')
 
 
-@login_required
+@login_required(redirect_field_name=None, login_url='/')
 def logout(request):
     logout_auth(request)
     return redirect('app:home')
