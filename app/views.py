@@ -7,7 +7,7 @@ from . import models, forms
 
 
 def home(request):
-    return render(request, 'app/home_page.html')
+    return render(request, 'app/home.html')
 
 
 @login_required
@@ -45,4 +45,4 @@ def profile(request):
         'place_remember_form': place_remember_form
     })
 
-    return render(request, 'app/profile_page.html', context)
+    return render(request, 'app/profile.html', context)
