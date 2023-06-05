@@ -12,11 +12,14 @@ class TestUrls(SimpleTestCase):
         self.assertEquals(resolver.view_name, viewname)
         self.assertEquals(resolver.func, func)
 
+
     def test_home_url(self):
         self._test_name_is_resolves('app:home', home)
-        
+
+
     def test_profile_url(self):
         self._test_name_is_resolves('app:profile', profile)
+
 
     def test_invalid_url(self):
         url = '/invalid-url/'
