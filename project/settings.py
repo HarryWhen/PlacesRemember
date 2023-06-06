@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'leaflet',
+    'bootstrap4',
     'app',
 ]
 
@@ -140,7 +141,7 @@ SOCIAL_AUTH_VK_OAUTH2_KEY = '51662291'
 
 SOCIAL_AUTH_VK_OAUTH2_SECRET = config('SOCIAL_AUTH_VK_OAUTH2_SECRET')
 
-SOCIAL_AUTH_VK_OAUTH2_EXTRA_DATA = ['photo', 'photo_big']
+SOCIAL_AUTH_VK_OAUTH2_EXTRA_DATA = ['photo', 'first_name', 'last_name']
 
 
 LOGIN_URL = '/auth/login/vk-oauth2/'

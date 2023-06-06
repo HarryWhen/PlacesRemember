@@ -6,8 +6,29 @@ from social_django.models import UserSocialAuth
 from . import models, forms
 
 
+def load_user_data(request):
+    user = request.user
+    if not user.is_authenticated:
+        return {}
+    vk_account = UserSocialAuth.objects.filter(user=user, provider='vk-oauth2').first()
+    if not vk_account:
+        return {}
+    avatar_url = vk_account.extra_data.get('photo')
+    first_name = vk_account.extra_data.get('first_name')
+    last_name = vk_account.extra_data.get('last_name')
+    return {
+        'avatar_url': avatar_url,
+        'first_name': first_name,
+        'last_name': last_name,
+    }
+
+
 def home(request):
-    return render(request, 'app/home.html')
+    context = {}
+
+    context.update(load_user_data(request))
+
+    return render(request, 'app/home.html', context)
 
 
 @login_required(redirect_field_name=None, login_url='/')
@@ -24,16 +45,11 @@ def profile(request):
             place_remember = place_remember_form.save(commit=False)
             place_remember.user = request.user
             place_remember.save()
-            return redirect('app:profile')
+        return redirect('app:profile')
 
     context = {}
 
-    if request.user.social_auth.filter(provider='vk-oauth2').exists():
-        user_social_auth = UserSocialAuth.objects.filter(provider='vk-oauth2', user=request.user).first()
-        avatar_url = user_social_auth.extra_data.get('photo_big', '')
-        context.update({
-            'avatar_url': avatar_url
-        })
+    context.update(load_user_data(request))
 
     place_remembers = models.PlaceRemember.objects.filter(user=request.user)
     context.update({

@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, NumberInput, Textarea
+from django.forms import ModelForm, TextInput, HiddenInput, Textarea
 # from leaflet.forms.widgets import LeafletWidget
 
 from . import models
@@ -17,11 +17,11 @@ class PlaceRememberForm(ModelForm):
             'name': TextInput(attrs={
                 'placeholder': "Name",
             }),
-            'location_latitude': NumberInput(attrs={
+            'location_latitude': HiddenInput(attrs={
                 'placeholder': "Location",
                 'id': 'latitude',
             }),
-            'location_longitude': NumberInput(attrs={
+            'location_longitude': HiddenInput(attrs={
                 'placeholder': "Location",
                 'id': 'longitude',
             }),

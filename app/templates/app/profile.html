@@ -1,49 +1,72 @@
-<!DOCTYPE html>
+{% extends 'app/base.html' %}
+
+{% load bootstrap4 %}
 {% load leaflet_tags %}
-<html>
-<head>
-    <title>Profile</title>
-    {% leaflet_js %}
-    {% leaflet_css %}
-    <script>
-        function initMap(map, options) {
-            var marker = L.marker([55.7522200, 37.6155600], { draggable: true }).addTo(map);
 
-            marker.on('dragend', function(event) {
-                var latitude = marker.getLatLng().lat;
-                var longitude = marker.getLatLng().lng;
-                document.getElementById('latitude').value = latitude;
-                document.getElementById('longitude').value = longitude;
-            });
+{% block title %} Profile {% endblock %}
+
+{% block head %}
+
+{% leaflet_js %}
+{% leaflet_css %}
+<script>
+    function initMap(map, options) {
+        var marker = L.marker([0, 0], { draggable: true }).addTo(map);
+
+        function updateMarker() {
+            var latitude = marker.getLatLng().lat;
+            var longitude = marker.getLatLng().lng;
+            document.getElementById('latitude').value = latitude;
+            document.getElementById('longitude').value = longitude;
         }
-    </script>
-</head>
-<body>
-    <header>
-        <div>
-            {% if avatar_url %}
-            <img src="{{ avatar_url }}" alt="Аватар">
-            {% endif %}
-        </div>
-        <div>{{ user.username }}!</div>
-        <div><a href="{% url 'app:logout' %}">Logout</a></div>
-    </header>
 
-    <h2>Your Remembers</h2>
-    <div>
+        map.on('click', function(event) {
+            marker.setLatLng(event.latlng);
+            updateMarker();
+        });
+
+        marker.on('dragend', function(event) {
+            updateMarker();
+        });
+    }
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <h4 class="card-header">Your Remembers</h4>
+    <ul class="list-group list-group-flush">
         {% for place_remember in place_remembers %}
-            <h3>{{ place_remember.name }} at {{ place_remember.location }}</h3>
-            <p>{{ place_remember.comment }}</p>
+        <li class="list-group-item">
+            <div class="card card-body">
+                <h5 class="card-title">{{ place_remember.name }} at {{ place_remember.location }}</h5>
+                <p class="card-text">{{ place_remember.comment }}</p>
+            </div>
+        </li>
         {% endfor %}
-    </div>
+    </ul>
+</div>
 
-    <form method="post">
-        {% csrf_token %}
-        {% for control in place_remember_form %}
-            {{ control }}<br>
-        {% endfor %}
-        {% leaflet_map "map" callback="window.initMap" %}
-        <button type="submit">Add remember</button>
-    </form>
-</body>
-</html>
+<div class="card">
+    <h4 class="card-header">Discribe Your Remember</h4>
+    <div class="card-body row">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <form class="form" method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form place_remember_form %}
+                    {% bootstrap_button "Add remember" button_type="submit" button_class="btn-primary" %}
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-body h-100">
+                {% leaflet_map "map" callback="window.initMap" %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

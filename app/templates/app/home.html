@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <header>
-        {% if user.is_authenticated %}
-            <div>Hello, <a href="{% url 'app:profile' %}">{{ user.username }}</a>!</div>
-            <div><a href="{% url 'app:logout' %}">Logout</a></div>
-        {% else %}
-            <div><a href="{% url 'social:begin' 'vk-oauth2' %}">Login with VK</a></div>
-        {% endif %}
-    </header>
-    <h1>Welcome to Home!</h1>
-    <p>Discription</p>
-</body>
-</html>
+{% extends 'app/base.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <h1 class="card-header">Welcome to Home!</h1>
+    <div class="card-body">
+        <p class="card-text">Discription</p>
+    </div>
+</div>
+
+{% endblock %}
