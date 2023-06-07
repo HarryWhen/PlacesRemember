@@ -8,7 +8,7 @@ from django.forms import ModelForm, TextInput, HiddenInput, Textarea
 from . import models
 
 
-# class docstring misstake for testV2
+# class docstring misstake for testV3
 """
 Form for remembering a place.
 
