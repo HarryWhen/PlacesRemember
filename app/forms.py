@@ -1,11 +1,26 @@
+"""
+Module containing Django forms.
+
+This module contains the definitions of Django forms used in the project.
+"""
 from django.forms import ModelForm, TextInput, HiddenInput, Textarea
-# from leaflet.forms.widgets import LeafletWidget
 
 from . import models
 
 
+# class docstring misstake for test
+"""
+Form for remembering a place.
+
+This class defines a form for remembering a place based on the PlaceRemember model.
+"""
 class PlaceRememberForm(ModelForm):
     class Meta:
+        """
+        Form metadata for remembering a place.
+
+        This inner class defines metadata for the PlaceRememberForm, such as the associated model.
+        """
         model = models.PlaceRemember
         fields = [
             'name',
