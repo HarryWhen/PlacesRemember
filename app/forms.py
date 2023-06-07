@@ -8,13 +8,13 @@ from django.forms import ModelForm, TextInput, HiddenInput, Textarea
 from . import models
 
 
-# class docstring misstake for testV3
-"""
-Form for remembering a place.
-
-This class defines a form for remembering a place based on the PlaceRemember model.
-"""
+"""Misstake"""
 class PlaceRememberForm(ModelForm):
+    """
+    Form for remembering a place.
+
+    This class defines a form for remembering a place based on the PlaceRemember model.
+    """
     class Meta:
         """
         Form metadata for remembering a place.
