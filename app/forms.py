@@ -8,7 +8,6 @@ from django.forms import ModelForm, TextInput, HiddenInput, Textarea
 from . import models
 
 
-"""Misstake"""
 class PlaceRememberForm(ModelForm):
     """
     Form for remembering a place.

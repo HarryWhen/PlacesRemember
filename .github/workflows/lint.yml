@@ -25,4 +25,4 @@ jobs:
 
     - name: Run Pylint
       run: |
-        git diff-tree --no-commit-id --name-only -r HEAD
+        pylint $(git ls-files '*.py')
