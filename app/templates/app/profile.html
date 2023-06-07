@@ -1,16 +1,22 @@
 {% extends 'app/base.html' %}
 
 {% load bootstrap4 %}
-{% load leaflet_tags %}
 
 {% block title %} Profile {% endblock %}
 
 {% block head %}
 
-{% leaflet_js %}
-{% leaflet_css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script>
-    function initMap(map, options) {
+    document.addEventListener('DOMContentLoaded', function() {
+        var map = L.map('map').setView([55.7522200, 37.6155600], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+            maxZoom: 18,
+        }).addTo(map);
+
         var marker = L.marker([0, 0], { draggable: true }).addTo(map);
 
         function updateMarker() {
@@ -28,7 +34,8 @@
         marker.on('dragend', function(event) {
             updateMarker();
         });
-    }
+    });
+    
 </script>
 
 {% endblock %}
@@ -63,7 +70,7 @@
         </div>
         <div class="col-md-6">
             <div class="card card-body h-100">
-                {% leaflet_map "map" callback="window.initMap" %}
+                <div id="map"></div>
             </div>
         </div>
     </div>

@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
-    'leaflet',
     'bootstrap4',
     'app',
 ]
@@ -67,6 +66,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -147,16 +148,3 @@ SOCIAL_AUTH_VK_OAUTH2_EXTRA_DATA = ['photo', 'first_name', 'last_name']
 LOGIN_URL = '/auth/login/vk-oauth2/'
 
 LOGIN_REDIRECT_URL  = '/profile/'
-
-
-LEAFLET_CONFIG = {
-    'DEFAULT_CENTER': (55.7522200, 37.6155600),
-    'DEFAULT_ZOOM': 13,
-    'MIN_ZOOM': 3,
-    'MAX_ZOOM': 18,
-}
-
-
-GDAL_LIBRARY_PATH = str(BASE_DIR / 'venv/Lib/site-packages/osgeo/gdal304.dll')
-
-GEOS_LIBRARY_PATH = str(BASE_DIR / 'venv/Lib/site-packages/osgeo/geos_c.dll')
