@@ -25,6 +25,4 @@ jobs:
 
     - name: Run Pylint
       run: |
-        if git diff-tree --no-commit-id --name-only -r HEAD | grep -q '\.py$'; then
-          git diff-tree --no-commit-id --name-only -r HEAD | grep '\.py$' | xargs pylint
-        fi
+        git diff-tree --no-commit-id --name-only -r HEAD
